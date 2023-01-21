@@ -31,6 +31,7 @@ public class ButtonLogic : MonoBehaviour
     //events
     public delegate void TimerDelegate();
     public static TimerDelegate ExerciseTimersUp;
+    public static TimerDelegate ExerciseCanvas¡ctivation;
 
     public delegate void CanvasDelegate(Canvas canvas);
     public static CanvasDelegate MainSummCanavsActivated;
@@ -85,6 +86,7 @@ public class ButtonLogic : MonoBehaviour
         if (canvas.name == "Exercise")
         {
             DeavtivateButtonBar();
+            ExerciseCanvas¡ctivation();
         }
 
         else if (OldCanvas.name == "Exercise")

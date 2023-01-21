@@ -34,8 +34,20 @@ public class ExerciseController : MonoBehaviour
         SummCube.GetComponent<Animator>().enabled = false;
         ButtonLogic.MainSummCanavsActivated += StartAnimation;
         ButtonLogic.MainSummCanavsDeactivated += StopAnimation;
+        ButtonLogic.ExerciseCanvas¡ctivation += SetUP;
         ButtonLogic.ExerciseTimersUp += HideButtons;
         //CalculateTimer();
+    }
+
+    private void SetUP()
+    {
+        PauseBtn.SetActive(false);
+        PlayBtn.SetActive(true);
+        SkipBtn.SetActive(true);
+        CompleteBtn.SetActive(false);
+        SummCube.GetComponent<Animator>().enabled = true;
+        has_timer_started = false;
+        has_timer_paused = false;
     }
 
     //animations
