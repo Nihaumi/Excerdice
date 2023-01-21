@@ -16,10 +16,15 @@ public class ButtonLogic : MonoBehaviour
     [SerializeField] Canvas OldCanvas;
     [SerializeField] Canvas ARCanvas = null;
 
-    [SerializeField] GameObject homebtn_grey;
-    [SerializeField] GameObject homebtn_color;
-    [SerializeField] GameObject exercisebtn_color;
-    [SerializeField] GameObject exercisebtn_grey;
+    [SerializeField] GameObject homebtn;
+    [SerializeField] GameObject exercisebtn;
+    [SerializeField] GameObject socialsbtn;
+    [SerializeField] private Color tmp_color;
+    [SerializeField] private float start_opacity = 0.7f;
+    [SerializeField] private float start_opacity_homebtn = 0.6f;
+    [SerializeField] private float active_opacity = 1;
+    [SerializeField] private Color start_value = new Color(216, 251, 255);
+    [SerializeField] private Color active_value = new Color(130, 223, 233);
 
     //events
     public delegate void TimerDelegate();
@@ -41,19 +46,21 @@ public class ButtonLogic : MonoBehaviour
         MainCanvas.transform.position = new Vector3(0, 0, 0);
         OldCanvas = MainCanvas;
 
-        DisbaleColorIcons();
-        homebtn_color.SetActive(true);
-        homebtn_grey.SetActive(false);
+        ChangeOpacity(homebtn, active_opacity, active_value);
+        ChangeOpacity(exercisebtn, start_opacity, start_value);
+        ChangeOpacity(socialsbtn, start_opacity, start_value);
         Confetti.SetActive(false);
 
         ExerciseTimersUp += SwitchToSummary;
         WorkTimer.MainTimersUp += SwitchToExercise;
     }
 
-    private void DisbaleColorIcons()
+    public void ChangeOpacity(GameObject obj, float opacity, Color value)
     {
-        homebtn_color.SetActive(false);
-        exercisebtn_color.SetActive(false);
+        tmp_color = obj.GetComponent<Image>().color;
+        //tmp_color = value;
+        tmp_color.a = opacity;
+        obj.GetComponent<Image>().color = tmp_color;
     }
 
     public void SwitchToSummary()
@@ -80,15 +87,13 @@ public class ButtonLogic : MonoBehaviour
             ActivateButtonBar();
         }
 
-        if(canvas.name == "Exercise List")
+        if (canvas.name == "Exercise List")
         {
-            exercisebtn_color.SetActive(true);
-            exercisebtn_grey.SetActive(false);
+            ChangeOpacity(exercisebtn, active_opacity, active_value);
         }
-        else if(OldCanvas.name == "Exercise List")
+        else if (OldCanvas.name == "Exercise List")
         {
-            exercisebtn_color.SetActive(false);
-            exercisebtn_grey.SetActive(true);
+            ChangeOpacity(exercisebtn, start_opacity, start_value);
         }
         if (canvas.name == "Summary")
         {
@@ -103,14 +108,12 @@ public class ButtonLogic : MonoBehaviour
         if (canvas.name == "Main")
         {
             MainSummCanavsActivated(canvas);
-            homebtn_color.SetActive(true);
-            homebtn_grey.SetActive(false);
+            ChangeOpacity(homebtn, active_opacity, active_value);
         }
         else if (OldCanvas.name == "Main")
         {
             MainSummCanavsDeactivated(canvas);
-            homebtn_color.SetActive(false);
-            homebtn_grey.SetActive(true);
+            ChangeOpacity(homebtn, start_opacity_homebtn, start_value);
         }
         if (canvas.name == "AR")
         {

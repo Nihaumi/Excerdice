@@ -29,7 +29,7 @@ public class ColorThemePicker : MonoBehaviour
         red_down = new Color32(229, 198, 109, 255);
 
         blue_up = new Color32(55, 71, 194, 255);
-        blur_down = new Color32(109, 229, 109, 255);
+        blur_down = new Color32(109, 229, 194, 255);
 
         green_up = new Color32(91, 185, 71, 255);
         green_down = new Color32(229, 227, 109, 255);
