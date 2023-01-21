@@ -10,6 +10,7 @@ public class ExerciseController : MonoBehaviour
     [SerializeField] GameObject PlayBtn;
     [SerializeField] GameObject PauseBtn;
     [SerializeField] GameObject SkipBtn;
+    [SerializeField] GameObject CompleteBtn ;
 
     //timer
     public TMP_Text timerText;
@@ -27,9 +28,13 @@ public class ExerciseController : MonoBehaviour
     void Start()
     {
         PauseBtn.SetActive(false);
+        PlayBtn.SetActive(true);
+        SkipBtn.SetActive(true);
+        CompleteBtn.SetActive(false);
         SummCube.GetComponent<Animator>().enabled = false;
         ButtonLogic.MainSummCanavsActivated += StartAnimation;
         ButtonLogic.MainSummCanavsDeactivated += StopAnimation;
+        ButtonLogic.ExerciseTimersUp += HideButtons;
         //CalculateTimer();
     }
 
@@ -85,12 +90,25 @@ public class ExerciseController : MonoBehaviour
         PlayBtn.SetActive(true);
         PauseBtn.SetActive(false);
     }
+
+    public void HideButtons()
+    {
+        PlayBtn.SetActive(false);
+        PauseBtn.SetActive(false);
+        SkipBtn.SetActive(false);
+    }
     #endregion
     // Update is called once per frame
     void Update()
     {
         if (has_timer_started && !has_timer_paused)
             CalculateTimer();
+    }
+
+    public void ShowCompletetdBtn()
+    {
+        PlayBtn.SetActive(false);
+        PauseBtn.SetActive(false);
     }
 
     public void CalculateTimer()

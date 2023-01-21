@@ -12,6 +12,8 @@ public class ButtonLogic : MonoBehaviour
     [SerializeField] Canvas SummaryCanvas;
     [SerializeField] GameObject Buttons;
     [SerializeField] GameObject BtnBG;
+    [SerializeField] GameObject MenuBar;
+    [SerializeField] GameObject CompletetBtn;
     [SerializeField] GameObject Confetti;
     [SerializeField] Canvas OldCanvas;
     [SerializeField] Canvas ARCanvas = null;
@@ -42,6 +44,8 @@ public class ButtonLogic : MonoBehaviour
 
     private void Start()
     {
+        ActivateButtonBar();
+        MenuBar.SetActive(true);
         MoveAllCanvas();
         MainCanvas.transform.position = new Vector3(0, 0, 0);
         OldCanvas = MainCanvas;
@@ -51,7 +55,7 @@ public class ButtonLogic : MonoBehaviour
         ChangeOpacity(socialsbtn, start_opacity, start_value);
         Confetti.SetActive(false);
 
-        ExerciseTimersUp += SwitchToSummary;
+        ExerciseTimersUp += ShowCompletetBtn;
         WorkTimer.MainTimersUp += SwitchToExercise;
     }
 
@@ -63,9 +67,10 @@ public class ButtonLogic : MonoBehaviour
         obj.GetComponent<Image>().color = tmp_color;
     }
 
-    public void SwitchToSummary()
+    public void ShowCompletetBtn()
     {
-        SwitchMenu(SummaryCanvas);
+        CompletetBtn.SetActive(true);
+        //SwitchMenu(SummaryCanvas);
     }
     public void SwitchToExercise()
     {
@@ -85,6 +90,7 @@ public class ButtonLogic : MonoBehaviour
         else if (OldCanvas.name == "Exercise")
         {
             ActivateButtonBar();
+            CompletetBtn.SetActive(false);
         }
 
         if (canvas.name == "Exercise List")
