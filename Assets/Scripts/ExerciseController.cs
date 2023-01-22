@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.Video;
 
 public class ExerciseController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ExerciseController : MonoBehaviour
     [SerializeField] GameObject PlayBtn;
     [SerializeField] GameObject PauseBtn;
     [SerializeField] GameObject SkipBtn;
-    [SerializeField] GameObject CompleteBtn ;
+    [SerializeField] GameObject CompleteBtn;
 
     //timer
     public TMP_Text timerText;
@@ -23,6 +24,10 @@ public class ExerciseController : MonoBehaviour
     //animated cubes
     [SerializeField] private GameObject MainCube;
     [SerializeField] private GameObject SummCube;
+
+    //Exercise Video
+    private VideoPlayer video_player;
+    [SerializeField] GameObject VideoPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +42,10 @@ public class ExerciseController : MonoBehaviour
         ButtonLogic.ExerciseCanvas¡ctivation += SetUP;
         ButtonLogic.ExerciseTimersUp += HideButtons;
         //CalculateTimer();
+
+        //Exercise Video
+        video_player = VideoPlayer.GetComponent<VideoPlayer>();
+        video_player.frame = 0;
     }
 
     private void SetUP()
@@ -48,6 +57,8 @@ public class ExerciseController : MonoBehaviour
         SummCube.GetComponent<Animator>().enabled = true;
         has_timer_started = false;
         has_timer_paused = false;
+        video_player.Pause();
+        video_player.frame = 0;
     }
 
     //animations
@@ -67,7 +78,7 @@ public class ExerciseController : MonoBehaviour
             Debug.LogWarning("invalid Call - canvas event should only truigger for exercise or summary");
         }
     }
-    public void StopAnimation(Canvas canvas =null)
+    public void StopAnimation(Canvas canvas = null)
     {
         MainCube.GetComponent<Animator>().enabled = false;
         SummCube.GetComponent<Animator>().enabled = false;
@@ -82,6 +93,8 @@ public class ExerciseController : MonoBehaviour
         has_timer_started = false;
         has_timer_paused = false;
         ButtonLogic.ExerciseTimersUp();
+        video_player.frame = 0;
+        video_player.Stop();
     }
 
     public void StartTimer()
@@ -93,6 +106,7 @@ public class ExerciseController : MonoBehaviour
 
         PlayBtn.SetActive(false);
         PauseBtn.SetActive(true);
+        video_player.Play();
     }
 
     public void PauseTimer()
@@ -101,6 +115,7 @@ public class ExerciseController : MonoBehaviour
 
         PlayBtn.SetActive(true);
         PauseBtn.SetActive(false);
+        video_player.Stop();
     }
 
     public void HideButtons()
