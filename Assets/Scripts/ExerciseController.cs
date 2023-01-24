@@ -94,7 +94,7 @@ public class ExerciseController : MonoBehaviour
         has_timer_paused = false;
         ButtonLogic.ExerciseTimersUp();
         video_player.frame = 0;
-        video_player.Stop();
+        video_player.Pause();
     }
 
     public void StartTimer()
@@ -115,7 +115,7 @@ public class ExerciseController : MonoBehaviour
 
         PlayBtn.SetActive(true);
         PauseBtn.SetActive(false);
-        video_player.Stop();
+        video_player.Pause();
     }
 
     public void HideButtons()
