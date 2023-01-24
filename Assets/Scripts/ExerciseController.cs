@@ -13,6 +13,11 @@ public class ExerciseController : MonoBehaviour
     [SerializeField] GameObject SkipBtn;
     [SerializeField] GameObject CompleteBtn;
 
+    //Texts
+    [SerializeField] private GameObject set1;
+    [SerializeField] private GameObject pause;
+    [SerializeField] private GameObject set2;
+
     //timer
     public TMP_Text timerText;
     [SerializeField] public float startTimer = 900f;
@@ -59,6 +64,9 @@ public class ExerciseController : MonoBehaviour
         has_timer_paused = false;
         video_player.Pause();
         video_player.frame = 0;
+        set1.gameObject.SetActive(true);
+        pause.gameObject.SetActive(false);
+        set2.gameObject.SetActive(false);
     }
 
     //animations
@@ -144,7 +152,22 @@ public class ExerciseController : MonoBehaviour
         {
             ButtonLogic.ExerciseTimersUp();
             has_timer_started = false;
+            video_player.Stop();
             return;
+        }
+        else if (timer <= 30.01f && timer >= 29f)
+        {
+            video_player.Play();
+            set1.gameObject.SetActive(false);
+            set2.gameObject.SetActive(true);
+            pause.gameObject.SetActive(false);
+        }
+        else if (timer <= 60.01f && timer >= 59f) 
+        {
+            video_player.Pause();
+            pause.gameObject.SetActive(true);
+            set1.gameObject.SetActive(false);
+            set1.gameObject.SetActive(false);
         }
         timer -= Time.deltaTime;
 
